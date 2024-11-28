@@ -1,0 +1,51 @@
+##"Различие атрибутов класса и экземпляра"#module_5_4
+##короткое напоминание работы *args и **kvargs
+# class Example:
+#   def __new__(cls, *args, **kwargs):
+#     print(args)
+#     print(kwargs)
+#     return object.__new__(cls)
+#   def __init__(self, first, second, third):
+#     print(first)
+#     print(second)
+#     print(third)
+# ex = Example('data', second=25, third=3.14)
+# #print(ex)
+##короткое напоминание работы *args и **kvargs
+
+##Задача "История строительства":
+
+class House:
+    houses_history = []
+    def __new__(cls, *args, **kwargs):
+#        print(args)
+#        print(kwargs)
+#        cls.houses_history.append(args)
+        return object.__new__(cls)
+    def __init__(self, name, number_of_floors):
+       self.name = name
+       self.number_of_floors = number_of_floors
+       self.houses_history.append(name)
+    def __eq__(self, other):
+       if isinstance(self, House) and isinstance(other, House):
+           if isinstance(self.number_of_floors, int) and isinstance(other.number_of_floors, int):
+               return self.number_of_floors == other.number_of_floors
+           else:
+               print ('Количество этажей не является числовым')
+       else:
+           print('Переданный параметр не принадлежит классу House')
+    def __del__(self):
+       print(f'Название: {self.name}, снесён, но он останется в истории')
+
+#
+h1 = House('ЖК Эльбрус', 10)
+print(House.houses_history)
+h2 = House('ЖК Акация', 20)
+print(House.houses_history)
+h3 = House('ЖК Матрёшки', 20)
+print(House.houses_history)
+# Удаление объектов
+del h2
+del h3
+print(House.houses_history)
+
