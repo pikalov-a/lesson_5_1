@@ -22,48 +22,34 @@ class Plant:
 
 
 class Mammal(Animal):
-    Animal.alive = True
-    Animal.fed = False
+    def __init__(self, name):
+        super().__init__(name)
 
 
 class Predator(Animal):
-    Animal.alive = True
-    Animal.fed = False
-
+    def __init__(self, name):
+        super().__init__(name)
 
 class Flower(Plant):
-    Plant.edible = False
-    print('!!!!', Plant.name)
-    print('!!!!', Plant.edible)
+    def __init__(self, name):
+        super().__init__(name, edible=False)
 
 
 class Fruit(Plant):
-    Plant.edible = True
-    print('----', Plant.edible)
+    def __init__(self, name):
+        super().__init__(name, edible=True)
 
 
-#
 a1 = Predator('Волк с Уолл-Стрит')
 a2 = Mammal('Хатико')
 p1 = Flower('Цветик семицветик')
-print(p1.name, p1.edible)
 p2 = Fruit('Заводной апельсин')
 print(p2.name, p2.edible)
 print(a1.name)
 print(p1.name)
+
 print(a1.alive)
 print(a2.fed)
-
-print(a1.name, a1.alive, a1.fed)
-print(a2.name, a2.alive, a2.fed)
-print(p1.name, p1.edible)
-print(p2.name, p2.edible)
-print(p1.edible)
-print(p2.edible)
-
-print(p1.edible)
-print(p2.edible)
-
 a1.eat(p1)
 a2.eat(p2)
 print(a1.alive)
