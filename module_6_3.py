@@ -2,17 +2,13 @@
 ##Задача "Ошибка эволюции":
 import random
 
-
 class Animal:
-    def __init__(self, live=True, sound=None, _DEGREE_OF_DANGER=0):
-#        cords = [0, 0, 0]
-#        speed = 1
+    def __init__(self, live=True, sound=None, degree_of_danger=0, speed=10): #добавили speed
         self._cords = [0, 0, 0]
-#        print(self._cords)
-#        self.speed = 10
-        self.live=True
-        self.sound=sound
-#        self._DEGREE_OF_DANGER=0
+        self.live = live
+        self.sound = sound
+        self.degree_of_danger = degree_of_danger
+        self.speed = speed
 
 
     def move(self, dx, dy, dz):
@@ -28,35 +24,30 @@ class Animal:
         print(f'X: {self._cords[0]} Y: {self._cords[1]} Z: {self._cords[2]}')
 
     def attack(self):
-        if self._DEGREE_OF_DANGER < 5:
+        if self.degree_of_danger < 5:
             print("Sorry, i'm peaceful :)")
         else:
             print("Be careful, i'm attacking you 0_0")
 
     def speak(self):
-        print(self)
+        if self.sound:
+            print(self.sound)
+        else:
+            print("...")
 
 
 class Bird(Animal):
-    def __init__(self, **kvargs):
-        super().__init__(**kvargs)
-
-    beak = True
-
-    # def lay_eggs(self):
-    #     print(f"Here are(is) {random.choice[1, 2, 3, 4]} eggs for you")
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.beak = True
 
     def lay_eggs(self):
         print(f"Here are {random.choice([1, 2, 3, 4])} eggs for you")
 
 
-class AquaticAnimal(Animal ):
-    def __init__(self, **kvargs):
-        super().__init__(**kvargs)
-
-#    def __init__(self, _DEGREE_OF_DANGER = 3):
-#        super().__init__(self)
-
+class AquaticAnimal(Animal):
+    def __init__(self, degree_of_danger=3, **kwargs):
+        super().__init__(degree_of_danger=degree_of_danger, **kwargs)
 
     def dive_in(self, dz):
         self._cords[2] -= self.speed / 2 * abs(dz)
@@ -64,32 +55,17 @@ class AquaticAnimal(Animal ):
 
 
 class PoisonousAnimal(Animal):
-    def __init__(self, **kvargs):
-        super().__init__(**kvargs)
-
-#    def __init__(self, _DEGREE_OF_DANGER=8):
-#        super().__init__(self)
-
-    _DEGREE_OF_DANGER = 8
+    def __init__(self, degree_of_danger=8, **kwargs):
+        super().__init__(degree_of_danger=degree_of_danger, **kwargs)
 
 
 class Duckbill(PoisonousAnimal, AquaticAnimal, Bird):
-#    def __init__(self, **kvargs):
-#        super().__init__(**kvargs)
-
-    def __init__(self, speed):
+    def __init__(self, speed=10):
         self.live = True
-        self.speed = 10
+        self.speed = speed
         self.sound = "Click-click-click"
-        print("!!!!",self.sound)
-        super().__init__() ##если отключить, sound работает, а move не работает
-        print("11111",self.sound)
-        self.sound = "Click-click-click"  # все равно не крякает!!!!
-        print("00000",self.sound)
-#        self.move()
-
-
-
+        super().__init__(speed=self.speed)
+        super().__init__(sound = "Click-click-click") #спасибо за подсказку, увидел, догадался
 
 db = Duckbill(10)
 print(db.live)
